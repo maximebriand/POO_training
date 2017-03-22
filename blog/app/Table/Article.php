@@ -1,12 +1,15 @@
 <?php
 namespace App\Table;
-
-class Article
+use App\App;
+class Article extends Table
 {
-    public  function __GET($key){
-        $method = 'get' . ucfirst($key);
-        $this->$key = $this->$method();
-        return $this->$key;
+    public static function getLast(){
+        return App::getDb()->query("
+            SELECT  articles.id, articles.titre, articles.contenu, categories.titre as categorie
+            FROM blog.articles
+            LEFT JOIN blog.categories
+                ON category_id = categories.id
+            ", __CLASS__);
     }
 
     public function getUrl(){
