@@ -12,11 +12,21 @@ use App\App;
 
 class Table
 {
+    protected static $table;
+
+    private static function getTable(){
+        if(static::$table === null){
+            $class_name = explode('\\', get_called_class());
+            self::$table = strtolower(end($class_name));
+        }
+        return self::$table;
+    }
+
     public static function all(){
         return App::getDb()->query("
               SELECT *
               FROM " . static::$table . "
-            ", __CLASS__);
+            ", get_called_class());
     }
 
     public function __GET($key){

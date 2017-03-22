@@ -14,8 +14,7 @@
     <div class="col-sm-4">
         <?php foreach (\App\Table\Categorie::all() as $categorie): ?>
         <li>
-
-            <a href="<?= $categorie->getUrl(); ?>"><?= $categorie->titre; ?></a>
+            <a href="<?= $categorie->url; ?>"><?= $categorie->titre; ?></a>
         </li>
         <?php endforeach;?>
     </div>
