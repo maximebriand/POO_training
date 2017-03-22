@@ -10,21 +10,10 @@ namespace App\Table;
 use App\App;
 
 
-class Categorie
+class Categorie extends Table
 {
-    public static $table = 'blog.categories';
-    public static function all(){
-        return App::getDb()->query("
-              SELECT *
-              FROM " . self::$table . "
-            ", __CLASS__);
-    }
+    protected static $table = 'blog.categories';
 
-    public  function __GET($key){
-        $method = 'get' . ucfirst($key);
-        $this->$key = $this->$method();
-        return $this->$key;
-    }
     public function getUrl(){
         return 'index.php?p=categorie&id='.$this->id;
     }
