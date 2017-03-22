@@ -7,12 +7,12 @@ class Article extends Table
     protected static $table = 'blog.articles';
 
     public static function getLast(){
-        return App::getDb()->query("
+        return self::query("
               SELECT articles.id, articles.titre, articles.contenu, categories.titre as categorie
               FROM " . static::$table ."
               LEFT JOIN blog.categories
                 ON articles.category_id = categories.id 
-            ", __CLASS__);
+            ");
     }
 
     public function getUrl(){
@@ -22,5 +22,15 @@ class Article extends Table
         $html = '<p>' . substr($this->contenu, 0, 100) . '...</p>';
         $html .= '<p><a href="' . $this->getUrl() . '">Voir la suite</a>';
         return $html;
+    }
+
+    public static function lastByCategory($categorie_id){
+        return self::query("
+              SELECT articles.id, articles.titre, articles.contenu, categories.titre as categorie
+              FROM " . static::$table ."
+              LEFT JOIN blog.categories
+                ON articles.category_id = categories.id 
+              WHERE category_id = ?
+            ", [$categorie_id]);
     }
 }
